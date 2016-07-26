@@ -1844,7 +1844,7 @@ a:hover {
 ul li {
   margin: 15px 0 0;
   font-size: 1.6em;
-  color: #8d9aa5;
+  color: black;
   position: relative;
 }
 
@@ -2064,4 +2064,10 @@ footer p {
 
 input[type=search] {
   font-size: 2em;
+}
+
+.modes {
+  list-style-type: katakana;
+  margin-left: 38px;
+  color: #8d9aa5;
 }
