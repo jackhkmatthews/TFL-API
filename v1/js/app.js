@@ -1,87 +1,124 @@
+var timesToStation =[];
+var nextArrival;
+var nextTubeHTML;
+var numberOfRequests = 0;
+var numberOfRequestsHTML;
 
-
-
-
-
-// $("document").ready(function() {
-  
-//   var searchTerm = '';
-  
-//   $("form").submit( function(evt) {
-//     evt.preventDefault();
-    
-    
-//     var flickrAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-
-
-   
-//     searchTerm = $("#search").val();
-    
-//     var flickrOptions = {
-//       tags: searchTerm,
-//       format: "json"
-//     };
-    
-//     function displayPhotosFunction (data) {
-//       var photosHTML = '<ul>';
-//       $.each(data.items , function (i, photo) {
-//         photosHTML += '<li class = "grid-25 tablet-grid-50">';
-//         photosHTML += '<a href="' + photo.link + '" class="image">';
-//         photosHTML += '<img src="' + photo.media.m +  '"></a></li>';
-//       });  // end each
-      
-//       photosHTML += '</ul>'
-//       $("#photos").html(photosHTML);
-      
-//     }; // end displayPhotosFunction
-    
-//     $.getJSON(flickrAPI, flickrOptions, displayPhotosFunction);
-    
-//     console.log(searchTerm);
-    
-//     }); // end submit
-  
-// }); //end ready
-
-var searchTerm = '';
-var stations
 
 $("document").ready(function() {
-  
-  
-  
-  $("form").submit( function(evt) {
-    evt.preventDefault();
-   
-    searchTerm = $("#search").val();
 
-    var TflAPI = "https://api.tfl.gov.uk/StopPoint/Search/" + searchTerm + "?app_id=835d0307&app_key=42620817a4da70de276d15fc45a73e1a"
-    
-    var TflOptions = {
-      faresOnly: "False",
-    };
-    
-    function printToList (data) {
-     stations = data; 
-     console.log(stations)
+  $(".button").click( function(event) {
+    event.preventDefault();
 
-    var stationNamesHTML = '<ul>';
-      $.each(data.matches, function (i, station) {
-        stationNamesHTML += '<li class = "grid-25 tablet-grid-50">';
-        stationNamesHTML += station.name
-        stationNamesHTML += '</li>'
-      })//end each 
-    stationNamesHTML += '</ul>'
-    $("#stationNames").html(stationNamesHTML);
+    function animateButton () {
+      $( ".button" ).animate({
+        width: "680px",
+        left: "10px",
+        borderRadius: "10px"
+        //top: "56px"
+      }, 500 );
+      $( ".button" ).animate({
+        width: "680px",
+        left: "10px",
+        //top: "56px"
+      }, 6000 );
+      $( ".button" ).animate({
+        width: "250px",
+        left: "225px",
+        borderRadius: "0px"
+        //top: "56px"
+      }, 500 );
+    }
 
-     }; // end printToList
-    
-    $.getJSON(TflAPI, TflOptions, printToList);
-    
-    console.log(searchTerm);
-    
-    }); // end submit
-  
-}); //end 
+    function animateContainer () {
+      $( ".container" ).animate({
+        padding: "21px",
+      }, 500 );
+      $( ".container" ).animate({
+        width:  "526px",
+        height: "174px",
+        left: "36px",
+      }, 500 );
+      $( ".container" ).animate({
+        width:  "526px",
+        height: "174px",
+        left: "36px",
+      }, 6000 );
+      $( ".container" ).animate({
+        width:  "526px",
+        height: "174px",
+        left: "36px",
+      }, 250 );
+      $( ".container" ).animate({
+        width:  "100px",
+        height: "100px",
+        left: "249px",
+      }, 300 );
+    }
 
 
+    var TflAPI = "https://api.tfl.gov.uk/StopPoint/940GZZLUAGL/Arrivals?app_id=835d0307&app_key=42620817a4da70de276d15fc45a73e1a"
+
+    function printToPage (data) {
+      arrivals = data;
+      console.log(arrivals)
+
+      timesToStation = [];
+      $.each(arrivals, function (i, arrival) {
+        timesToStation.push(arrival.timeToStation);
+      }); //end each
+
+      console.log(timesToStation);
+
+      var LowestTime = 10000;
+      for (i = 0; i<timesToStation.length; i++){
+        if (timesToStation[i] < LowestTime && timesToStation[i] > 0) {
+          LowestTime = timesToStation[i];
+        } // end of if
+      }; //end of for loop
+      console.log(LowestTime);
+
+      $.each(arrivals, function (i, arrival) {
+        if (arrival.timeToStation === LowestTime) {
+          nextArrival = arrival
+        };
+      }); //end each
+
+      console.log(nextArrival.towards);
+
+      nextTubeHTML = "";
+      nextTubeHTML += "<p>";
+      nextTubeHTML += "The next tube from Angel is heading towards " + nextArrival.towards + " ";
+      nextTubeHTML += "and will be departing in " + LowestTime + " second(s).";
+      nextTubeHTML += "</p>";
+
+      console.log(nextTubeHTML);
+
+      $("#next_tube").html(nextTubeHTML);
+
+      numberOfRequests += 1;
+      numberOfRequestsHTML = "";
+      numberOfRequestsHTML += "<li>Number of requests: " + numberOfRequests + "</li>"
+
+      $("#number_of_requests").html(numberOfRequestsHTML);
+
+   }; // end printToPage
+
+   function delayedGetAndHideJSON () {
+     window.setTimeout(function(){$.getJSON(TflAPI, printToPage);}, 1000)
+     window.setTimeout(function(){$("#next_tube").html("")}, 6500)
+     window.setTimeout(function(){$("#number_of_requests").html("")}, 6500)
+   }
+
+   animateButton();
+
+   animateContainer();
+
+   delayedGetAndHideJSON();
+
+
+
+ }); //end click
+
+
+}); //end ready
