@@ -40,20 +40,20 @@ $("document").ready(function() {
       console.log(nextArrival.towards);
 
       nextTubeHTML = "";
-      nextTubeHTML += "<ul>";
-      nextTubeHTML += "<li>Leaves in: " + LowestTime + " seconds</li>";
-      nextTubeHTML += "<li>Towards: " + nextArrival.towards + "</li>";
-      nextTubeHTML += "</ul>";
+      nextTubeHTML += "<p>";
+      nextTubeHTML += "Is heading towards " + nextArrival.towards + " ";
+      nextTubeHTML += "and will be departing in " + LowestTime + " seconds.";
+      nextTubeHTML += "</p>";
 
       console.log(nextTubeHTML);
 
-      $("#nextTube").html(nextTubeHTML);
+      $("#next_tube").html(nextTubeHTML);
 
       numberOfRequests += 1;
       numberOfRequestsHTML = "";
       numberOfRequestsHTML += "<li>Number of requests: " + numberOfRequests + "</li>"
 
-      $("#numberOfRequests").html(numberOfRequestsHTML);
+      $("#number_of_requests").html(numberOfRequestsHTML);
 
    }; // end printToPage
 

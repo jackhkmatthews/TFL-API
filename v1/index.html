@@ -1,35 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
+<html><head>
   <meta charset="utf-8">
   <title>AJAX Angel</title>
-  <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <link href="http://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/railway-sans" type="text/css"/>
   <link rel="stylesheet" href="css/main.css">
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="js/app.js"></script>
 </head>
 <body>
-  <div class="grid-container centered">
-    <div class="grid-100">
-      <div class="contained">
-        <div class="grid-100">
-          <div class="heading">
-            <form>
-              <input type="submit" value="next tube" id="button" class="button">
-            </form>
-            
-          </div>
+  <div id="wrapper">
+    <div class="button_wrapper">
+      <form>
+        <input type="button" class="button" id="button" value="NEXT TUBE">
+      </form>
+    </div>
+    <div class="container">
+      <div id="triangle-left">
+      </div>
+      <div class="print_container">
+        <div id="next_tube">
         </div>
-
-        <ul id="nextTube">
-
-
-        </ul>
-        <ul>
-          <li id="numberOfRequests"></li>
-        </ul>
+        <div id = "number_of_requests">
+        </div>
       </div>
     </div>
   </div>
-</body>
-</html>
+
+
+</body></html>
