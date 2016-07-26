@@ -2071,3 +2071,8 @@ input[type=search] {
   margin-left: 38px;
   color: #8d9aa5;
 }
+
+#button {
+  display: inline-block;
+  padding: 0 auto;
+}
